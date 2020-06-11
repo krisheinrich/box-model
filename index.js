@@ -1,3 +1,6 @@
+
+// style objects
+
 const DEFAULTS = {
   // background
   'backgroundColor': '#aaa',
@@ -21,19 +24,46 @@ const CONTAINER_DEFAULTS = {
   'justifyContent': 'center',
 }
 
+let boxStyles = { ...DEFAULTS };
+let containerStyles = { ...CONTAINER_DEFAULTS };
+
+// global refs
+
+
+const container = document.getElementsByClassName('canvas')[0];
+const box = document.createElement('div');
+
+// helpers
+
 function applyStyles(styleObj, node) {
   Object.keys(styleObj).forEach(styleName => {
     const val = styleObj[styleName];
-    node.style[styleName] = typeof val === 'string' ? val : `${val}px`
+    node.style[styleName] = typeof val === 'string' ? val : `${val}px`;
   });
 }
 
-// draw box to canvas
-const canvas = document.getElementsByClassName('canvas')[0];
-const box = document.createElement('div')
-box.classList.add('box');
+function attachClickHandler(id, cb) {
+  document.getElementById(id).addEventListener('click', e => {
+    cb();
+    render();
+  });
+}
 
-applyStyles(DEFAULTS, box);
-applyStyles(CONTAINER_DEFAULTS, canvas);
+function render() {
+  box.remove();
+  applyStyles(boxStyles, box);
+  applyStyles(containerStyles, container);
+  container.append(box);
+}
 
-canvas.append(box);
+// draw box in container
+render();
+
+// bind event handlers
+attachClickHandler('h-pos-l', () => containerStyles.justifyContent = 'flex-start');
+attachClickHandler('h-pos-c', () => containerStyles.justifyContent = 'center');
+attachClickHandler('h-pos-r', () => containerStyles.justifyContent = 'flex-end');
+
+attachClickHandler('v-pos-t', () => containerStyles.alignItems = 'flex-start');
+attachClickHandler('v-pos-c', () => containerStyles.alignItems = 'center');
+attachClickHandler('v-pos-b', () => containerStyles.alignItems = 'flex-end');
