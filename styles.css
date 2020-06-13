@@ -11,13 +11,21 @@ html, body {
   box-sizing: inherit;
 }
 
-body {
+.row {
+  display: flex;
+}
+
+#root, .app {
+  height: 100%;
+}
+
+.app {
   display: flex;
 }
 
 .canvas {
-  flex: 4;
   display: flex;
+  flex: 4;
 }
 
 .panel {
@@ -48,7 +56,3 @@ body {
   font-size: 14px;
   margin-right: 20px;
 }
-
-
-
-
